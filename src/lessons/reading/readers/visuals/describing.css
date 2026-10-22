@@ -1,0 +1,64 @@
+/* Adjectives and Adverbs: the picture acts out the describing words (prefixed dw-). */
+.dw-run {
+  animation: dw-run 3s linear infinite;
+}
+
+@keyframes dw-run {
+  0% {
+    transform: translateX(-330px);
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(330px);
+    opacity: 0;
+  }
+}
+
+.dw-hop {
+  animation: dw-hop 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes dw-hop {
+  to {
+    transform: translateY(-36px);
+  }
+}
+
+.dw-float {
+  animation: dw-float 2.6s ease-out infinite;
+}
+
+@keyframes dw-float {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(50px, -54px);
+    opacity: 0;
+  }
+}
+
+.dw-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dw-twinkle 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes dw-twinkle {
+  from {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}

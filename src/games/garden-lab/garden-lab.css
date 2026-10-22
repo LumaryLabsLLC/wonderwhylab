@@ -1,0 +1,669 @@
+.garden-lab {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.garden-lab-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.garden-lab-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(19px, 3vw, 28px);
+  line-height: 1.2;
+}
+
+.garden-lab-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.garden-lab-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.garden-lab-say {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: white;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.garden-lab-say:hover {
+  border-color: var(--line-2);
+}
+
+.garden-lab-fact {
+  margin: 0;
+  min-height: 2.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.25;
+  color: var(--muted);
+}
+
+.garden-lab-fact.good {
+  color: var(--ink);
+}
+
+.garden-lab-fact.bad {
+  color: var(--bad);
+}
+
+.garden-lab-fact.eq {
+  align-self: center;
+  padding: 4px 16px;
+  border-radius: 14px;
+  background: var(--leaf-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  animation: garden-lab-pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.garden-lab-board {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 28px);
+}
+
+.mode-cycle .garden-lab-board,
+.mode-parts .garden-lab-board {
+  flex-direction: row;
+  gap: clamp(16px, 4vw, 48px);
+}
+
+.garden-lab-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Shared drop-target look. */
+.garden-lab-pot,
+.garden-lab-slot,
+.garden-lab-bloom,
+.garden-lab-zone {
+  border-radius: 22px;
+  border: 2.5px dashed var(--line-2);
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.garden-lab-pot.ready,
+.garden-lab-slot.ready,
+.garden-lab-bloom.ready,
+.garden-lab-zone.ready {
+  border-color: var(--ocean);
+}
+
+.garden-lab-pot.hover,
+.garden-lab-slot.hover,
+.garden-lab-bloom.hover,
+.garden-lab-zone.hover {
+  border-style: solid;
+  border-color: var(--ocean);
+  background: var(--ocean-soft);
+  transform: scale(1.04);
+}
+
+/* Band 0: plants in pots. */
+.garden-lab-pots {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 3vw, 32px);
+  width: 100%;
+}
+
+.garden-lab-pot {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 250px;
+  aspect-ratio: 200 / 260;
+  padding: 8px;
+}
+
+.garden-lab-pot.shade {
+  background: #e4e7ef;
+}
+
+.garden-lab-pot.done {
+  border-style: solid;
+  border-color: var(--leaf);
+  background: var(--leaf-soft);
+  cursor: default;
+}
+
+.garden-lab-perk {
+  animation: garden-lab-perk 0.5s cubic-bezier(0.3, 1.5, 0.5, 1);
+  transform-box: view-box;
+  transform-origin: 50% 70%;
+}
+
+.garden-lab-puddle {
+  animation: garden-lab-pop 0.4s ease-out;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Band 1: life-cycle ring. */
+.garden-lab-ring {
+  position: relative;
+  flex: none;
+  width: min(100%, 56vh, 480px);
+  aspect-ratio: 1;
+}
+
+.garden-lab-ring > .garden-lab-svg {
+  position: absolute;
+  inset: 0;
+}
+
+.garden-lab-slot {
+  position: absolute;
+  width: 25%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 4px;
+}
+
+.garden-lab-slot svg {
+  width: 84%;
+  height: auto;
+}
+
+.garden-lab-slot.done {
+  border-style: solid;
+  border-color: var(--ink);
+  background: var(--leaf-soft);
+  cursor: default;
+}
+
+.garden-lab-slot.new svg {
+  animation: garden-lab-pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.garden-lab-slot-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(11px, 1.5vw, 14px);
+  line-height: 1.05;
+  text-align: center;
+}
+
+.garden-lab-slot-n {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 3.5vw, 32px);
+  color: var(--line-2);
+}
+
+.garden-lab-start {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: var(--leaf);
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Band 2: flowers and the bee. */
+.garden-lab-meadow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 24px);
+  width: min(760px, 100%);
+}
+
+.garden-lab-bloom {
+  aspect-ratio: 100 / 170;
+  max-height: 44vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 6px 6px;
+}
+
+.garden-lab-bloom .garden-lab-svg {
+  flex: 1;
+  min-height: 0;
+}
+
+.garden-lab-bloom.source {
+  border-style: solid;
+  border-color: var(--sun);
+  background: var(--sun-soft);
+}
+
+.garden-lab-bloom.fruit {
+  border-style: solid;
+  border-color: var(--leaf);
+  background: var(--leaf-soft);
+}
+
+.garden-lab-bloom-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.garden-lab-grow {
+  animation: garden-lab-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.garden-lab-bee {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.garden-lab-pollen {
+  width: 16px;
+  height: 16px;
+  margin-left: -14px;
+  align-self: flex-end;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+}
+
+/* Band 2: plant to label. */
+.garden-lab-plant {
+  position: relative;
+  flex: none;
+  height: min(56vh, 500px);
+  aspect-ratio: 300 / 420;
+}
+
+.garden-lab-spot-wrap {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.garden-lab-spot {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  border: 2.5px dashed var(--ocean);
+  background: rgba(255, 255, 255, 0.7);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.garden-lab-spot.hover {
+  border-style: solid;
+  background: var(--ocean-soft);
+  transform: scale(1.2);
+}
+
+.garden-lab-spot.ready {
+  animation: garden-lab-breathe 1.4s ease-in-out infinite;
+}
+
+.garden-lab-spot.done {
+  width: 30px;
+  height: 30px;
+  border: 2.5px solid white;
+  background: var(--good);
+  box-shadow: 0 2px 6px rgba(30, 43, 74, 0.35);
+  cursor: default;
+}
+
+.garden-lab-tag {
+  position: absolute;
+  translate: -50% 20px;
+  padding: 1px 10px;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: garden-lab-pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+/* Band 3: the leaf and its three zones. */
+.garden-lab-photo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-areas:
+    'in leaf out'
+    'not not not';
+  gap: 12px;
+  width: min(900px, 100%);
+}
+
+.garden-lab-leaf {
+  grid-area: leaf;
+  align-self: center;
+  padding: 4px 8px;
+}
+
+.garden-lab-leaf.cheer {
+  animation: garden-lab-cheer 0.6s ease;
+}
+
+.garden-lab-zone {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 8px;
+}
+
+.zone-in {
+  grid-area: in;
+}
+
+.zone-out {
+  grid-area: out;
+}
+
+.zone-not {
+  grid-area: not;
+  min-height: 80px;
+  justify-self: center;
+  width: min(460px, 100%);
+}
+
+.garden-lab-zone-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(15px, 2vw, 19px);
+}
+
+.zone-in .garden-lab-zone-name::after {
+  content: ' →';
+}
+
+.zone-out .garden-lab-zone-name::before {
+  content: '→ ';
+}
+
+.garden-lab-zone-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.garden-lab-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px 2px 4px;
+  border-radius: 99px;
+  background: var(--leaf-soft);
+  font-size: 14px;
+  animation: garden-lab-pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.garden-lab-chip.given {
+  background: var(--surface-2);
+  color: var(--muted);
+  animation: none;
+}
+
+/* Cards still to place. */
+.garden-lab-tray {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.mode-cycle .garden-lab-tray,
+.mode-parts .garden-lab-tray {
+  width: min(340px, 100%);
+}
+
+.garden-lab-card {
+  min-height: 64px;
+  max-width: 260px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px 6px 8px;
+  border-radius: 18px;
+  border: 2.5px solid var(--ink);
+  background: var(--leaf-soft);
+  box-shadow: 0 5px 0 var(--ink);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(16px, 2.2vw, 20px);
+  line-height: 1.15;
+  text-align: left;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.25s cubic-bezier(0.3, 1.3, 0.5, 1), box-shadow 0.15s;
+}
+
+.garden-lab-card.parts {
+  padding: 8px 22px;
+  background: var(--sun-soft);
+}
+
+.garden-lab-card.bee {
+  min-height: 72px;
+  padding: 8px 18px 8px 12px;
+  background: var(--sun-soft);
+}
+
+.garden-lab-card svg {
+  flex: none;
+}
+
+.garden-lab-card.selected {
+  background: var(--ocean-soft);
+  transform: translateY(-6px);
+  box-shadow: 0 9px 0 var(--ink);
+}
+
+.garden-lab-card.dragging {
+  position: relative;
+  z-index: 5;
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 0 14px 24px -8px rgba(30, 43, 74, 0.45);
+}
+
+.garden-lab-card.shake {
+  animation: garden-lab-shake 0.4s;
+}
+
+@keyframes garden-lab-shake {
+  0%,
+  100% {
+    translate: 0;
+  }
+  25%,
+  75% {
+    translate: -8px 0;
+  }
+  50% {
+    translate: 8px 0;
+  }
+}
+
+@keyframes garden-lab-pop {
+  from {
+    scale: 0.4;
+    opacity: 0;
+  }
+}
+
+@keyframes garden-lab-perk {
+  from {
+    transform: scaleY(0.85);
+  }
+}
+
+@keyframes garden-lab-cheer {
+  50% {
+    transform: translateY(-8px) rotate(-2deg);
+  }
+}
+
+@keyframes garden-lab-breathe {
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 720px) {
+  .mode-cycle .garden-lab-board,
+  .mode-parts .garden-lab-board {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .garden-lab-board {
+    justify-content: flex-start;
+  }
+
+  .mode-cycle .garden-lab-tray,
+  .mode-parts .garden-lab-tray {
+    width: auto;
+  }
+
+  .garden-lab-ring {
+    width: min(100%, 46vh);
+  }
+
+  .garden-lab-plant {
+    height: min(46vh, 420px);
+  }
+
+  .garden-lab-pot {
+    padding: 4px;
+    border-radius: 16px;
+  }
+
+  .garden-lab-meadow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(300px, 100%);
+  }
+
+  .garden-lab-bloom {
+    max-height: 22vh;
+    aspect-ratio: auto;
+    height: 22vh;
+  }
+
+  .garden-lab-photo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'leaf leaf'
+      'in out'
+      'not not';
+    gap: 8px;
+  }
+
+  .garden-lab-leaf {
+    width: 150px;
+    justify-self: center;
+    padding: 0;
+  }
+
+  .garden-lab-zone {
+    min-height: 110px;
+    border-radius: 16px;
+  }
+
+  .zone-not {
+    min-height: 64px;
+  }
+
+  .garden-lab-card {
+    min-height: 58px;
+    padding: 5px 12px 5px 6px;
+    gap: 6px;
+  }
+
+  .garden-lab-tray {
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden-lab-card,
+  .garden-lab-pot,
+  .garden-lab-slot,
+  .garden-lab-bloom,
+  .garden-lab-zone,
+  .garden-lab-spot {
+    transition: none;
+  }
+
+  .garden-lab-card.shake,
+  .garden-lab-spot.ready,
+  .garden-lab-perk,
+  .garden-lab-puddle,
+  .garden-lab-slot.new svg,
+  .garden-lab-grow,
+  .garden-lab-tag,
+  .garden-lab-chip,
+  .garden-lab-leaf.cheer,
+  .garden-lab-fact.eq {
+    animation: none;
+  }
+}

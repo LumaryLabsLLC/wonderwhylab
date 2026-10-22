@@ -1,0 +1,321 @@
+.sort-it {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sort-it-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sort-it-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.sort-it-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.sort-it-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* The table: a pile of cards on top, two baskets below. */
+.sort-it-field {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sort-it-pile {
+  flex: 1;
+  min-height: 190px;
+}
+
+.sort-it-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.sort-it-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  border-radius: 22px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 5px 0 var(--ink);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  will-change: transform;
+  transition:
+    transform 0.34s cubic-bezier(0.3, 1.3, 0.5, 1),
+    opacity 0.3s ease,
+    box-shadow 0.15s;
+}
+
+.sort-it-card:focus-visible {
+  box-shadow:
+    0 5px 0 var(--ink),
+    0 0 0 4px var(--ocean);
+}
+
+.sort-it-card.is-drag {
+  z-index: 10;
+  cursor: grabbing;
+  transition: box-shadow 0.15s;
+  box-shadow:
+    0 5px 0 var(--ink),
+    0 22px 30px -14px rgba(30, 43, 74, 0.55);
+}
+
+.sort-it-card.selected {
+  z-index: 5;
+  box-shadow:
+    0 5px 0 var(--ink),
+    0 0 0 5px var(--sun);
+}
+
+.sort-it-card.is-peek {
+  z-index: 9;
+  transition: transform 0.26s cubic-bezier(0.5, 0, 0.8, 0.6);
+}
+
+.sort-it-card.is-in {
+  z-index: 9;
+  pointer-events: none;
+  transition:
+    transform 0.34s cubic-bezier(0.5, 0, 0.8, 0.6),
+    opacity 0.34s ease-in;
+}
+
+.sort-it-card.is-back {
+  z-index: 8;
+  transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+
+.sort-it-drop {
+  width: 100%;
+  height: 100%;
+  animation: sort-it-in 0.4s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+.sort-it-face {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.sort-it-face.wobble {
+  animation: sort-it-wobble 0.5s ease;
+}
+
+.sort-it-face svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sort-it-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(var(--cw, 160px) * 0.38);
+  line-height: 1;
+}
+
+.sort-it-frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(var(--cw, 160px) * 0.26);
+  line-height: 1.05;
+}
+
+.sort-it-frac-bar {
+  width: 1.3em;
+  height: 5px;
+  margin: 3px 0;
+  border-radius: 3px;
+  background: var(--ink);
+}
+
+.sort-it-baskets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 3vw, 28px);
+}
+
+.sort-it-basket {
+  --c: var(--ocean);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: clamp(124px, 22vh, 190px);
+  padding: 12px;
+  border-radius: 24px;
+  border: 2.5px dashed color-mix(in srgb, var(--c) 55%, white);
+  background: color-mix(in srgb, var(--c) 10%, white);
+  cursor: default;
+  transition:
+    transform 0.15s,
+    background 0.15s,
+    border-color 0.15s;
+  touch-action: manipulation;
+}
+
+.sort-it-basket.ready {
+  cursor: pointer;
+}
+
+.sort-it-basket.over {
+  transform: scale(1.04);
+  border-style: solid;
+  border-color: var(--ink);
+  background: color-mix(in srgb, var(--c) 24%, white);
+}
+
+.sort-it-basket.hint {
+  border-style: solid;
+  border-color: var(--c);
+  animation: sort-it-glow 0.8s ease-in-out infinite alternate;
+}
+
+.sort-it-basket-art {
+  width: clamp(80px, 13vw, 124px);
+  height: auto;
+  overflow: visible;
+}
+
+.sort-it-count {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  fill: var(--ink);
+}
+
+.sort-it-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(17px, 2.6vw, 24px);
+  line-height: 1.15;
+  text-align: center;
+}
+
+.sort-it-bob {
+  display: inline-block;
+  animation: sort-it-bob 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.sort-it-spit {
+  display: inline-block;
+  animation: sort-it-spit 0.5s ease;
+}
+
+@keyframes sort-it-in {
+  from {
+    transform: translateY(-36px) scale(0.7);
+    opacity: 0;
+  }
+}
+
+@keyframes sort-it-wobble {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  45% {
+    transform: rotate(6deg);
+  }
+  70% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes sort-it-bob {
+  40% {
+    transform: translateY(-10px) scale(1.08);
+  }
+}
+
+@keyframes sort-it-spit {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: scale(1.1, 0.85);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-5deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes sort-it-glow {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 45%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--c) 25%, transparent);
+  }
+}
+
+@media (max-width: 640px) {
+  .sort-it-pile {
+    min-height: 220px;
+  }
+
+  .sort-it-hud {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sort-it-drop,
+  .sort-it-face.wobble,
+  .sort-it-bob,
+  .sort-it-spit,
+  .sort-it-basket.hint {
+    animation: none;
+  }
+}

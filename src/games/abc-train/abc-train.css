@@ -1,0 +1,344 @@
+.abc-train {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.abc-train-hud {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.abc-train-goal {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(19px, 3vw, 28px);
+  line-height: 1.2;
+}
+
+.abc-train-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.abc-train-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.abc-train-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(28px, 6vh, 64px);
+  overflow: hidden;
+}
+
+/* ── The train ── */
+
+.abc-train-track {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.abc-train-rails {
+  position: absolute;
+  left: -20px;
+  right: -20px;
+  bottom: 0;
+  height: 10px;
+  border-top: 3px solid var(--ink-2);
+  background: repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 26px);
+  opacity: 0.7;
+}
+
+.abc-train-train {
+  --car: 1fr;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(44px, 84px) repeat(var(--n), minmax(0, 1fr));
+  align-items: end;
+  gap: 6px;
+  width: 100%;
+  max-width: calc(90px + var(--n) * 104px);
+  margin: 0 auto;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+.abc-train-train.words {
+  max-width: calc(90px + var(--n) * 128px);
+}
+
+.abc-train-train.in {
+  transform: translateX(110vw);
+  transition-duration: 0s !important;
+}
+
+.abc-train-train.out {
+  transform: translateX(-120vw);
+  transition-timing-function: cubic-bezier(0.55, 0, 0.8, 0.4);
+}
+
+.abc-train-engine {
+  position: relative;
+  align-self: end;
+}
+
+.abc-train-engine svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.abc-train-puffs {
+  position: absolute;
+  left: 14%;
+  top: -10%;
+  width: 40%;
+  height: 40%;
+  pointer-events: none;
+}
+
+.abc-train-puffs i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--line-2);
+  opacity: 0;
+  animation: abc-train-puff 1s ease-out forwards;
+}
+
+.abc-train-puffs i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.abc-train-puffs i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes abc-train-puff {
+  0% {
+    opacity: 0.9;
+    transform: translate(0, 0) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(30%, -160%) scale(1.4);
+  }
+}
+
+.abc-train-car {
+  position: relative;
+  aspect-ratio: 1;
+  margin-bottom: 14px;
+  border-radius: 14px;
+  border: 2.5px solid var(--ink);
+  background: var(--hue, white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 2px;
+  color: var(--ink);
+  cursor: default;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.abc-train-train.words .abc-train-car {
+  aspect-ratio: 4 / 5;
+}
+
+/* Wheels */
+.abc-train-car::before,
+.abc-train-car::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  width: 22%;
+  aspect-ratio: 1;
+  min-width: 12px;
+  border-radius: 50%;
+  background: var(--ink-2);
+  border: 2px solid var(--ink);
+}
+
+.abc-train-car::before {
+  left: 16%;
+}
+
+.abc-train-car::after {
+  right: 16%;
+}
+
+.abc-train-car:disabled {
+  opacity: 1;
+}
+
+.abc-train-car.open {
+  background: white;
+  border-style: dashed;
+  cursor: pointer;
+}
+
+.abc-train-car.open.ready {
+  background: var(--sun-soft);
+}
+
+.abc-train-car.hover {
+  background: var(--sun-soft);
+  transform: translateY(-4px) scale(1.04);
+}
+
+.abc-train-car.wrong {
+  animation: abc-train-shake 0.4s;
+}
+
+.abc-train-car.just .abc-train-label {
+  animation: abc-train-pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.abc-train-empty {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(18px, 4vw, 30px);
+  color: var(--line-2);
+}
+
+.abc-train-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 5vw, 46px);
+  line-height: 1;
+}
+
+.abc-train-train.words .abc-train-label,
+.abc-train-piece.word .abc-train-label {
+  font-size: clamp(13px, 2.4vw, 18px);
+  font-weight: 600;
+}
+
+.abc-train-emoji {
+  font-size: clamp(24px, 5vw, 44px);
+  line-height: 1.1;
+}
+
+/* ── The blocks waiting in the yard ── */
+
+.abc-train-yard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  min-height: 84px;
+}
+
+.abc-train-piece {
+  position: relative;
+  width: clamp(60px, 13vw, 84px);
+  height: clamp(60px, 13vw, 84px);
+  border-radius: 18px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 5px 0 var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1), box-shadow 0.15s;
+}
+
+.abc-train-piece.word {
+  width: clamp(76px, 16vw, 110px);
+  height: clamp(84px, 18vw, 118px);
+}
+
+.abc-train-piece.dragging {
+  z-index: 10;
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 0 14px 22px -10px rgba(30, 43, 74, 0.5);
+}
+
+.abc-train-piece.selected {
+  background: var(--sun-soft);
+  transform: translateY(-6px);
+}
+
+.abc-train-piece:disabled {
+  cursor: default;
+}
+
+@keyframes abc-train-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes abc-train-pop {
+  from {
+    transform: scale(0.3);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .abc-train-hud {
+    flex-wrap: wrap;
+  }
+
+  .abc-train-goal {
+    flex-basis: calc(100% - 56px);
+  }
+
+  .abc-train-stats {
+    margin-left: auto;
+  }
+
+  .abc-train-train {
+    grid-template-columns: 46px repeat(var(--n), minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .abc-train-car {
+    border-radius: 10px;
+    border-width: 2px;
+  }
+}

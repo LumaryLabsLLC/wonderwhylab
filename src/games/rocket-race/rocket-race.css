@@ -1,0 +1,417 @@
+.rocket-race {
+  --gate: 110px;
+  --rocket-w: 64px;
+  --rocket-h: 110px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+/* One question line, then a slim progress track and the timer. */
+
+.rocket-race-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.rocket-race-question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 56px;
+  animation: rocket-race-in 0.3s ease both;
+}
+
+.rocket-race-question p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 6vw, 42px);
+  line-height: 1.1;
+  text-align: center;
+}
+
+.rocket-race-picture {
+  display: flex;
+  height: clamp(52px, 9vh, 84px);
+}
+
+.rocket-race-picture svg {
+  height: 100%;
+  width: auto;
+}
+
+.rocket-race-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.rocket-race-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 54px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.rocket-race-track {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--line);
+}
+
+.rocket-race-track-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--coral);
+  transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.rocket-race-moon {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: var(--sun-soft);
+  border: 2px solid var(--ink);
+}
+
+.rocket-race-moon.landed {
+  background: var(--sun);
+  animation: rocket-race-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.rocket-race-time {
+  min-width: 40px;
+  text-align: right;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink-2);
+}
+
+.rocket-race-time.low {
+  color: var(--coral);
+}
+
+/* The play field: three lanes of space. */
+
+.rocket-race-field {
+  position: relative;
+  flex: 1;
+  min-height: 300px;
+  overflow: hidden;
+  border-radius: 26px;
+  background: linear-gradient(180deg, #2a3a6b 0%, #1e2b4a 100%);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.rocket-race-field:focus-visible {
+  outline: 3px solid var(--ocean);
+  outline-offset: 3px;
+}
+
+.rocket-race-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 30px 40px, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 140px 180px, rgba(255, 255, 255, 0.45) 50%, transparent 51%);
+  background-size: 200px 200px, 260px 260px;
+}
+
+.rocket-race-lanes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rocket-race-lanes span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+.rocket-race-lanes span:first-child {
+  left: 33.333%;
+}
+
+.rocket-race-lanes span:last-child {
+  left: 66.666%;
+}
+
+/* A row of three numbered rocks. */
+
+.rocket-race-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--gate);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.rocket-race-gate {
+  position: absolute;
+  top: 0;
+  width: var(--gate);
+  height: var(--gate);
+  transform: translateX(-50%);
+  transition: opacity 0.5s, transform 0.3s;
+}
+
+.rocket-race-rock {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rocket-race-gate span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(var(--gate) * 0.36);
+  color: var(--ink);
+  line-height: 1;
+}
+
+.rocket-race-gate.long span {
+  font-size: calc(var(--gate) * 0.27);
+}
+
+.rocket-race-row.passed .rocket-race-gate {
+  opacity: 0;
+}
+
+.rocket-race-row.passed .rocket-race-gate.reveal,
+.rocket-race-row.passed .rocket-race-gate.hit-wrong {
+  opacity: 1;
+}
+
+.rocket-race-gate.reveal {
+  transform: translateX(-50%) scale(1.12);
+}
+
+.rocket-race-gate.reveal path {
+  fill: var(--leaf);
+}
+
+.rocket-race-gate.reveal circle {
+  fill: #2ba868;
+}
+
+.rocket-race-gate.hit-wrong {
+  animation: rocket-race-shake 0.45s;
+  opacity: 0.55 !important;
+}
+
+.rocket-race-gate.hit-right {
+  opacity: 0;
+  transform: translateX(-50%) scale(1.5);
+}
+
+/* The rocket. */
+
+.rocket-race-ship {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--rocket-w);
+  height: var(--rocket-h);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.rocket-race-ship > div {
+  width: 100%;
+  height: 100%;
+}
+
+.rocket-race-rocket {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rocket-race-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: rocket-race-flicker 0.18s ease-in-out infinite alternate;
+}
+
+.rocket-race-ship.boosting .rocket-race-flame {
+  animation-name: rocket-race-flicker-big;
+}
+
+.rocket-race-wobble {
+  animation: rocket-race-wobble 0.6s ease;
+}
+
+/* +1 and a ring of sparkles when a right rock is hit. */
+
+.rocket-race-burst {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.rocket-race-burst b {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--sun);
+  -webkit-text-stroke: 1.5px var(--ink);
+  paint-order: stroke fill;
+  animation: rocket-race-rise 0.9s ease-out forwards;
+}
+
+.rocket-race-burst i {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sun);
+  animation: rocket-race-spark 0.6s ease-out forwards;
+}
+
+.rocket-race-burst i:nth-child(odd) {
+  background: white;
+}
+
+@keyframes rocket-race-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes rocket-race-pop {
+  0% {
+    transform: translateY(-50%) scale(0.6);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+@keyframes rocket-race-shake {
+  0%,
+  100% {
+    transform: translateX(-50%);
+  }
+  25%,
+  75% {
+    transform: translateX(calc(-50% - 8px));
+  }
+  50% {
+    transform: translateX(calc(-50% + 8px));
+  }
+}
+
+@keyframes rocket-race-wobble {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(-14deg);
+  }
+  45% {
+    transform: rotate(11deg);
+  }
+  70% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes rocket-race-flicker {
+  from {
+    transform: scaleY(0.8);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes rocket-race-flicker-big {
+  from {
+    transform: scaleY(1.5);
+  }
+  to {
+    transform: scaleY(1.9);
+  }
+}
+
+@keyframes rocket-race-rise {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -150%);
+  }
+}
+
+@keyframes rocket-race-spark {
+  from {
+    opacity: 1;
+    transform: rotate(var(--a)) translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: rotate(var(--a)) translateY(-46px) scale(0.4);
+  }
+}
+
+@media (max-width: 640px) {
+  .rocket-race {
+    gap: 8px;
+  }
+
+  .rocket-race-question {
+    min-height: 44px;
+    gap: 10px;
+  }
+
+  .rocket-race-field {
+    border-radius: 20px;
+  }
+}

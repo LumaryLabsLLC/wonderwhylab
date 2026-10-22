@@ -1,0 +1,218 @@
+.launch-lab {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ll-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ll-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.ll-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ll-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: white;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.ll-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.ll-stage {
+  position: relative;
+  flex: 1;
+  min-height: 300px;
+  border-radius: 24px;
+  border: 2px solid var(--line);
+  overflow: hidden;
+}
+
+.ll-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  outline: none;
+}
+
+.ll-svg.pulling {
+  cursor: grabbing;
+}
+
+.ll-svg:focus-visible {
+  outline: 3px solid var(--ocean);
+  outline-offset: -3px;
+}
+
+.ll-tick,
+.ll-small,
+.ll-angle,
+.ll-planet {
+  font-family: var(--font-display);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.ll-tick {
+  font-size: 14px;
+  fill: var(--ink);
+}
+
+.ll-small {
+  font-size: 15px;
+}
+
+.ll-angle {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ll-planet {
+  font-size: clamp(15px, 2.2vw, 19px);
+  font-weight: 700;
+}
+
+.ll-knob {
+  cursor: grab;
+}
+
+.ll-knob.active circle:nth-of-type(2) {
+  stroke-width: 4.5;
+}
+
+.ll-basket.hit {
+  animation: ll-bounce 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+@keyframes ll-bounce {
+  40% {
+    transform: scale(1.12, 0.9);
+  }
+}
+
+.ll-ghost {
+  animation: ll-draw 1.2s ease-out both;
+  stroke-dashoffset: 0;
+}
+
+@keyframes ll-draw {
+  from {
+    opacity: 0;
+  }
+}
+
+.ll-foot {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ll-tries {
+  flex: none;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.ll-tries span {
+  width: 14px;
+  height: 14px;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: white;
+}
+
+.ll-tries span.used {
+  background: var(--coral);
+}
+
+.ll-tries span.good {
+  background: var(--leaf);
+}
+
+.ll-msg {
+  margin: 0;
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(16px, 2.3vw, 21px);
+  color: var(--ink-2);
+}
+
+.ll-msg.end {
+  color: var(--ink);
+  animation: ll-pop 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+@keyframes ll-pop {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .ll-stage {
+    min-height: 360px;
+  }
+  .ll-foot {
+    flex-wrap: wrap;
+  }
+  .ll-msg {
+    flex-basis: calc(100% - 70px);
+  }
+  .ll-foot .btn {
+    margin-left: auto;
+    min-height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-basket.hit,
+  .ll-ghost,
+  .ll-msg.end {
+    animation: none;
+  }
+}

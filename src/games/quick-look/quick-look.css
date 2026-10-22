@@ -1,0 +1,298 @@
+.quick-look {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quick-look-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.quick-look-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.quick-look-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.quick-look-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.quick-look-field {
+  --cell: clamp(46px, 7.5vw, 64px);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 3vh, 28px);
+}
+
+/* The card the pattern flashes on. */
+.quick-look-card {
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  border-radius: 24px;
+  border: 2px solid var(--line);
+  background: white;
+}
+
+.quick-look-card.quick-look-stage {
+  min-width: min(100%, 300px);
+  min-height: calc(var(--cell) * 2 + 40px);
+}
+
+.quick-look-card.showing {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 5px rgba(26, 163, 154, 0.18);
+}
+
+.quick-look-card.right {
+  border: 2.5px solid var(--good);
+  background: var(--leaf-soft);
+}
+
+.quick-look-card.off {
+  border: 2.5px solid var(--sun);
+  background: var(--sun-soft);
+}
+
+.quick-look-cover {
+  color: var(--line-2);
+}
+
+.quick-look-dot {
+  display: block;
+  width: 72%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--coral);
+  border: 2px solid var(--ink);
+}
+
+.quick-look-dot.placed {
+  background: var(--ocean);
+  animation: quick-look-pop 0.25s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+/* Dice face. */
+.quick-look-dice {
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell));
+  grid-template-rows: repeat(3, var(--cell));
+  padding: 10px;
+  border-radius: 22px;
+  border: 2.5px solid var(--ink);
+  background: var(--card, white);
+}
+
+.quick-look-pip-slot {
+  display: grid;
+  place-items: center;
+}
+
+/* Five- and ten-frames. */
+.quick-look-frames {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  touch-action: none;
+}
+
+.quick-look-frame {
+  display: grid;
+  border: 2.5px solid var(--ink);
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+
+.quick-look-frame.ten {
+  grid-template-columns: repeat(5, var(--cell));
+  grid-template-rows: repeat(2, var(--cell));
+}
+
+.quick-look-frame.five {
+  grid-template-columns: repeat(5, var(--cell));
+  grid-template-rows: var(--cell);
+}
+
+.quick-look-cell {
+  display: grid;
+  place-items: center;
+  border-right: 1.5px solid var(--line-2);
+  border-bottom: 1.5px solid var(--line-2);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.quick-look-frame.ten .quick-look-cell:nth-child(5n),
+.quick-look-frame.five .quick-look-cell:nth-child(5n) {
+  border-right: 0;
+}
+
+.quick-look-frame.ten .quick-look-cell:nth-child(n + 6),
+.quick-look-frame.five .quick-look-cell {
+  border-bottom: 0;
+}
+
+.quick-look-cell.tappable {
+  cursor: pointer;
+}
+
+.quick-look-cell.tappable:hover {
+  background: var(--surface-2);
+}
+
+/* Arrays. */
+.quick-look-array {
+  display: grid;
+  gap: 6px;
+}
+
+.quick-look-array .quick-look-dot {
+  width: calc(var(--cell) * 0.62);
+}
+
+.quick-look-grid {
+  display: grid;
+  gap: 4px;
+  touch-action: none;
+}
+
+.quick-look-grid-cell {
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 12px;
+  border: 2px dashed var(--line-2);
+  background: rgba(255, 255, 255, 0.7);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.quick-look-grid-cell.on {
+  border: 2px solid var(--ink);
+  background: var(--ocean-soft);
+}
+
+.quick-look-grid-cell .quick-look-dot {
+  width: 60%;
+  background: var(--ocean);
+}
+
+.quick-look-size {
+  margin: 8px 0 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink-2);
+}
+
+.quick-look-builder.read-only {
+  --cell: clamp(30px, 4.6vw, 44px);
+  pointer-events: none;
+}
+
+.quick-look-builder.read-only .quick-look-grid-cell:not(.on) {
+  visibility: hidden;
+}
+
+.quick-look-build-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: opacity 0.2s;
+}
+
+.quick-look-build-area.waiting {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.quick-look .btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+/* Reveal: what you saw beside what you made. */
+.quick-look-compare {
+  --cell: clamp(30px, 4.6vw, 44px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 32px);
+}
+
+.quick-look-compare figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.quick-look-compare figcaption {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--ink-2);
+}
+
+.quick-look-explain {
+  margin: 0;
+  max-width: 520px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(18px, 2.6vw, 24px);
+}
+
+@keyframes quick-look-pop {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .quick-look-hud {
+    align-items: flex-start;
+  }
+
+  .quick-look-field {
+    --cell: clamp(44px, 12.5vw, 56px);
+    justify-content: flex-start;
+  }
+}

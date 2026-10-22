@@ -1,0 +1,206 @@
+.balance-lab {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bl-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bl-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.bl-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bl-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: white;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.bl-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.bl-stage {
+  position: relative;
+  flex: 1;
+  min-height: 300px;
+  border-radius: 24px;
+  background: linear-gradient(var(--tangerine-soft, #ffead6), rgba(255, 255, 255, 0.75) 70%);
+  border: 2px solid var(--line);
+  overflow: hidden;
+}
+
+.bl-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bl-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  fill: var(--ink-2);
+}
+
+.bl-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  fill: var(--ink);
+  pointer-events: none;
+}
+
+.bl-weight {
+  cursor: grab;
+}
+
+.bl-weight.fixed {
+  cursor: default;
+}
+
+.bl-weight.selected {
+  filter: drop-shadow(0 0 6px var(--ocean));
+}
+
+.bl-weight.lifted {
+  pointer-events: none;
+  cursor: grabbing;
+  opacity: 0.92;
+}
+
+.bl-zone {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 3;
+  stroke-dasharray: 10 8;
+  transition: fill 0.15s, stroke 0.15s;
+}
+
+.bl-zone.on {
+  fill: rgba(59, 140, 255, 0.07);
+  stroke: var(--ocean);
+  cursor: pointer;
+}
+
+.bl-zone.hover {
+  fill: rgba(59, 140, 255, 0.18);
+  stroke: var(--ocean);
+  stroke-dasharray: none;
+}
+
+.bl-zone.hint {
+  fill: rgba(255, 210, 63, 0.3);
+  stroke: var(--sun);
+  stroke-dasharray: none;
+  animation: bl-glow 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes bl-glow {
+  to {
+    fill: rgba(255, 210, 63, 0.12);
+  }
+}
+
+.bl-tray {
+  fill: rgba(255, 255, 255, 0.85);
+  stroke: var(--line-2, #bfcbdc);
+  stroke-width: 3;
+}
+
+.bl-foot {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bl-msg {
+  margin: 0;
+  flex: 1 1 240px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(17px, 2.4vw, 22px);
+  color: var(--ink-2);
+}
+
+.bl-msg.good {
+  color: var(--ink);
+  font-weight: 700;
+  animation: bl-pop 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.bl-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.bl-actions .btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+@keyframes bl-pop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .bl-stage {
+    min-height: 420px;
+  }
+  .bl-foot .btn {
+    min-height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-msg.good,
+  .bl-zone.hint {
+    animation: none;
+  }
+  .bl-zone {
+    transition: none;
+  }
+}

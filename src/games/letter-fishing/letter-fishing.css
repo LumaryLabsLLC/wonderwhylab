@@ -1,0 +1,277 @@
+.letter-fishing {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.letter-fishing-hud {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.letter-fishing-goal {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 0;
+  min-height: 48px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(19px, 3vw, 28px);
+  line-height: 1.2;
+}
+
+.letter-fishing-chip {
+  display: inline-grid;
+  place-items: center;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 10px;
+  border-radius: 14px;
+  border: 2.5px solid var(--ink);
+  background: var(--sun-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.letter-fishing-chip.emoji {
+  background: white;
+  font-size: 30px;
+}
+
+.letter-fishing-slots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.letter-fishing-slots span {
+  width: 34px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-bottom: 3px solid var(--line-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.letter-fishing-slots span.next {
+  border-bottom-color: var(--ink);
+}
+
+.letter-fishing-slots span.got {
+  border-bottom-color: var(--leaf);
+  animation: letter-fishing-pop 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.letter-fishing-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.letter-fishing-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* ── The pond ── */
+
+.letter-fishing-pond {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 2.5px solid var(--ink);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.6) 0, transparent 45%),
+    linear-gradient(180deg, #c9ecff 0%, #8fd2f5 55%, #6bbfe8 100%);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.letter-fishing-toast {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.letter-fishing-toast span {
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  animation: letter-fishing-pop 0.25s ease-out;
+}
+
+.letter-fishing-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.letter-fishing-line line {
+  stroke: var(--ink-2);
+  stroke-width: 2;
+}
+
+.letter-fishing-fish {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: none;
+  will-change: transform;
+}
+
+.letter-fishing-fish:focus-visible {
+  outline: 3px solid var(--ocean);
+  border-radius: 40%;
+}
+
+.letter-fishing-body {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.letter-fishing-letter {
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  transform: translate(-50%, -52%);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.letter-fishing-fish.wriggle .letter-fishing-body {
+  animation: letter-fishing-wriggle 0.25s ease-in-out 2;
+}
+
+.letter-fishing-fish.caught {
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.6s cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 0.6s ease-in;
+}
+
+.letter-fishing-hook {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  width: 56px;
+  height: 56px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.letter-fishing-hook.dragging {
+  cursor: grabbing;
+}
+
+.letter-fishing-hook svg {
+  width: 100%;
+  height: 100%;
+}
+
+.letter-fishing-bucket {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  width: 92px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.letter-fishing-bucket svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@keyframes letter-fishing-wriggle {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  25% {
+    rotate: -14deg;
+  }
+  75% {
+    rotate: 14deg;
+  }
+}
+
+@keyframes letter-fishing-pop {
+  from {
+    transform: scale(0.3);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .letter-fishing-hud {
+    flex-wrap: wrap;
+  }
+
+  .letter-fishing-goal {
+    flex-basis: calc(100% - 56px);
+    font-size: 19px;
+  }
+
+  .letter-fishing-stats {
+    margin-left: auto;
+  }
+
+  .letter-fishing-chip {
+    min-width: 42px;
+    height: 42px;
+    font-size: 26px;
+  }
+
+  .letter-fishing-bucket {
+    width: 70px;
+  }
+}

@@ -1,0 +1,609 @@
+/* Feed the Monster: monster | plate | food, stacked on phones. */
+
+.feed-monster {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.feed-monster-main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.1fr) minmax(0, 1.05fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'bubble plate source'
+    'pet plate source';
+  align-content: center;
+  align-items: center;
+  column-gap: 32px;
+  row-gap: 12px;
+}
+
+.feed-monster-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feed-monster-round {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.feed-monster-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 12px;
+  border-radius: 99px;
+  background: var(--sun-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+/* Monster and speech bubble */
+
+.feed-monster-bubble {
+  grid-area: bubble;
+  position: relative;
+  justify-self: center;
+  align-self: end;
+  max-width: 100%;
+  margin-bottom: 10px;
+  padding: 12px 20px;
+  border: 2.5px solid var(--ink);
+  border-radius: 22px;
+  background: white;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.15;
+  text-wrap: balance;
+  animation: feed-monster-pop 0.35s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+.feed-monster-bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-right: 2.5px solid var(--ink);
+  border-bottom: 2.5px solid var(--ink);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.feed-monster-ask {
+  display: inline;
+}
+
+.feed-monster-hear {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 8px;
+  vertical-align: 0.15em;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.feed-monster-hear:hover {
+  border-color: var(--line-2);
+  color: var(--ink);
+}
+
+.feed-monster-bubble small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.7em;
+  color: var(--bad);
+}
+
+.feed-monster-pet {
+  grid-area: pet;
+  position: relative;
+  align-self: start;
+  display: flex;
+  justify-content: center;
+}
+
+.feed-monster-art {
+  width: min(100%, 290px);
+  height: auto;
+}
+
+.feed-monster-body {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.feed-monster-lid {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  transform: scaleY(0);
+  animation: feed-monster-blink 4.2s infinite;
+}
+
+.feed-monster-mouth-open,
+.feed-monster-mouth-closed {
+  opacity: 0;
+}
+
+.feed-monster-mouth-open.show,
+.feed-monster-mouth-closed.show {
+  opacity: 1;
+}
+
+.is-chomp .feed-monster-mouth-open {
+  animation: feed-monster-chomp-open 0.9s steps(1) both;
+}
+
+.is-chomp .feed-monster-mouth-closed {
+  animation: feed-monster-chomp-closed 0.9s steps(1) both;
+}
+
+.is-chomp .feed-monster-body {
+  animation: feed-monster-wiggle 1s ease;
+}
+
+.is-no .feed-monster-body {
+  animation: feed-monster-no 0.5s ease;
+}
+
+.feed-monster-sparkles i {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 3px;
+  border: 2px solid var(--ink);
+  background: var(--sun);
+  transform: rotate(var(--a));
+  animation: feed-monster-spark 0.85s ease-out forwards;
+}
+
+/* Plate */
+
+.feed-monster-plate-wrap {
+  grid-area: plate;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.feed-monster-plate {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  min-height: 190px;
+  margin: 0 auto;
+  padding: 26px 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--ink);
+  box-shadow:
+    inset 0 0 0 12px var(--surface-2),
+    0 12px 24px -14px rgba(30, 43, 74, 0.5);
+  touch-action: none;
+  transition: transform 0.25s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.feed-monster-plate.grabbable {
+  cursor: grab;
+}
+
+.feed-monster-plate.lifted {
+  z-index: 20;
+  cursor: grabbing;
+  transition: none;
+  box-shadow:
+    inset 0 0 0 12px var(--surface-2),
+    0 24px 34px -16px rgba(30, 43, 74, 0.55);
+}
+
+.feed-monster-plate.eaten > * {
+  animation: feed-monster-eaten 0.6s ease 0.2s forwards;
+}
+
+.band-3 .feed-monster-plate {
+  max-width: 290px;
+  aspect-ratio: 1;
+  padding: 26px;
+}
+
+.feed-monster-on-plate {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: 6px;
+  max-width: 100%;
+}
+
+.feed-monster-plate-hint {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--muted);
+}
+
+/* Food pieces */
+
+.feed-monster-piece {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  outline-offset: 2px;
+}
+
+.feed-monster-piece svg {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.feed-monster-piece.bag {
+  width: 66px;
+  height: 74px;
+  border-radius: 12px;
+}
+
+.feed-monster-piece:hover:not(.empty):not(.fixed) {
+  transform: translateY(-3px) rotate(-4deg);
+}
+
+.feed-monster-piece.placed {
+  animation: feed-monster-pop 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.feed-monster-piece.fixed {
+  cursor: default;
+}
+
+.feed-monster-on-plate .feed-monster-piece {
+  width: 52px;
+  height: 52px;
+}
+
+.feed-monster-on-plate .feed-monster-piece.bag {
+  width: 56px;
+  height: 63px;
+}
+
+.feed-monster-piece.empty {
+  border: 2px dashed var(--line-2);
+  cursor: default;
+}
+
+.feed-monster-piece.is-dragging,
+.feed-monster-slice.is-dragging {
+  opacity: 0.2;
+}
+
+.feed-monster-source {
+  grid-area: source;
+  display: flex;
+  justify-content: center;
+}
+
+.feed-monster-tray {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  gap: 10px;
+  padding: 16px;
+  border-radius: 24px;
+  background: var(--tangerine-soft);
+  border: 2.5px solid var(--ink);
+}
+
+.feed-monster-tray.bag {
+  grid-template-columns: repeat(3, 66px);
+  gap: 14px;
+}
+
+.feed-monster-pizza {
+  width: min(100%, 270px);
+  height: auto;
+  touch-action: none;
+  overflow: visible;
+}
+
+.feed-monster-pizza.on-plate {
+  width: 100%;
+}
+
+.feed-monster-slice {
+  cursor: grab;
+}
+
+.feed-monster-slice:focus-visible path {
+  stroke: var(--ocean);
+}
+
+.feed-monster-slice.placed {
+  animation: feed-monster-fade 0.25s ease both;
+}
+
+/* Readout and the big button */
+
+.feed-monster-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.feed-monster-readout {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.feed-monster-feed {
+  height: 60px;
+  padding: 0 32px;
+  border-radius: 99px;
+  border: 2.5px solid var(--ink);
+  background: var(--leaf);
+  box-shadow: 0 5px 0 var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 23px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.feed-monster-feed:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--ink);
+}
+
+.feed-monster-feed:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* What follows the finger while dragging */
+
+.feed-monster-ghost {
+  position: fixed;
+  z-index: 300;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  transform: scale(1.08) rotate(-5deg);
+  filter: drop-shadow(0 10px 10px rgba(30, 43, 74, 0.3));
+}
+
+.feed-monster-ghost svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.feed-monster-ghost.slice {
+  transform: none;
+}
+
+/* Animations */
+
+@keyframes feed-monster-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(0);
+  }
+  95% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes feed-monster-chomp-open {
+  0%,
+  40% {
+    opacity: 1;
+  }
+  20%,
+  60%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes feed-monster-chomp-closed {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  20%,
+  60%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes feed-monster-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-6deg) translateY(-6px);
+  }
+  45% {
+    transform: rotate(5deg);
+  }
+  70% {
+    transform: rotate(-3deg) translateY(-3px);
+  }
+}
+
+@keyframes feed-monster-no {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-9px);
+  }
+  50% {
+    transform: translateX(9px);
+  }
+}
+
+@keyframes feed-monster-eaten {
+  to {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+@keyframes feed-monster-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes feed-monster-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes feed-monster-spark {
+  to {
+    transform: rotate(var(--a)) translateY(-130px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* Phones and narrow tablets: monster and request on top, then plate, then the food. */
+
+@media (max-width: 720px) {
+  .feed-monster-main {
+    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      'pet bubble'
+      'plate plate'
+      'source source';
+    align-content: start;
+    column-gap: 10px;
+    row-gap: 14px;
+  }
+
+  .feed-monster-plate-wrap {
+    gap: 12px;
+  }
+
+  .feed-monster-pet {
+    align-self: center;
+  }
+
+  .feed-monster-bubble {
+    align-self: center;
+    justify-self: start;
+    margin: 0;
+    font-size: 19px;
+    padding: 10px 14px;
+  }
+
+  .feed-monster-bubble::after {
+    left: -11px;
+    bottom: auto;
+    top: 50%;
+    border: 0;
+    border-left: 2.5px solid var(--ink);
+    border-bottom: 2.5px solid var(--ink);
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .feed-monster-plate {
+    max-width: none;
+    min-height: 136px;
+    padding: 18px 28px;
+  }
+
+  .band-3 .feed-monster-plate {
+    max-width: 200px;
+    padding: 18px;
+  }
+
+  .feed-monster-controls {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 4px;
+  }
+
+  .feed-monster-readout {
+    font-size: 24px;
+  }
+
+  .feed-monster-feed {
+    height: 56px;
+    padding: 0 24px;
+    font-size: 20px;
+  }
+
+  .feed-monster-tray {
+    grid-template-columns: repeat(5, 56px);
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .feed-monster-tray.bag {
+    grid-template-columns: repeat(5, 56px);
+  }
+
+  .feed-monster-piece {
+    width: 56px;
+    height: 56px;
+  }
+
+  .feed-monster-piece.bag {
+    width: 56px;
+    height: 63px;
+  }
+
+  .feed-monster-on-plate .feed-monster-piece {
+    width: 46px;
+    height: 46px;
+  }
+
+  .feed-monster-on-plate .feed-monster-piece.bag {
+    width: 48px;
+    height: 54px;
+  }
+
+  .band-3 .feed-monster-pizza:not(.on-plate) {
+    width: 210px;
+  }
+}

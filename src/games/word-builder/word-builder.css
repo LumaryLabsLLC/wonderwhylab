@@ -1,0 +1,243 @@
+.word-builder {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.word-builder-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.word-builder-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.word-builder-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.word-builder-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.word-builder-field {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: clamp(14px, 3vh, 30px);
+}
+
+.word-builder-picture {
+  position: relative;
+  display: grid;
+  place-items: center;
+  animation: word-builder-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.word-builder-emoji {
+  font-size: clamp(76px, 15vh, 130px);
+  line-height: 1;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.word-builder-say {
+  position: absolute;
+  top: 0;
+  right: -60px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.word-builder-say:hover {
+  border-color: var(--line-2);
+  background: var(--surface-2);
+}
+
+/* The spaces the word is built in. */
+.word-builder-slots {
+  --gap: clamp(5px, 1.4vw, 10px);
+  --size: min(70px, calc((100vw - 48px - (var(--n) - 1) * var(--gap)) / var(--n)));
+  display: flex;
+  gap: var(--gap);
+  justify-content: center;
+}
+
+.word-builder-slot {
+  width: var(--size);
+  height: calc(var(--size) * 1.15);
+  padding: 0;
+  border-radius: 16px;
+  border: 2.5px dashed var(--line-2);
+  background: rgba(255, 255, 255, 0.6);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(var(--size) * 0.56);
+  line-height: 1;
+  color: var(--ink);
+  transition: transform 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.word-builder-slot:not(:disabled) {
+  cursor: pointer;
+}
+
+.word-builder-slot.over {
+  border-color: var(--grape);
+  background: var(--grape-soft);
+  transform: scale(1.06);
+}
+
+.word-builder-slot.filled {
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+.word-builder-slot.fixed {
+  border: 2.5px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-2);
+}
+
+.word-builder-slot.shake {
+  animation: word-builder-shake 0.42s;
+  border-color: var(--bad);
+}
+
+.word-builder-placed {
+  display: inline-block;
+  animation: word-builder-pop 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.word-builder-slots.done .word-builder-slot {
+  border: 2.5px solid var(--ink);
+  background: var(--leaf-soft);
+  box-shadow: 0 4px 0 var(--ink), 0 0 0 5px rgba(52, 196, 124, 0.25);
+  animation: word-builder-hop 0.55s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+/* Letter tiles waiting to be used. */
+.word-builder-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 16px);
+  max-width: 640px;
+  padding-bottom: 6px;
+}
+
+.word-builder-tile {
+  position: relative;
+  width: clamp(56px, 9vw, 70px);
+  height: clamp(56px, 9vw, 70px);
+  border-radius: 16px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 4px 0 var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  transition: transform 0.38s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.word-builder-tile:focus-visible {
+  outline: 3px solid var(--ocean);
+  outline-offset: 3px;
+}
+
+.word-builder-tile.lifted {
+  z-index: 20;
+  cursor: grabbing;
+  box-shadow: 0 14px 22px -8px rgba(30, 43, 74, 0.45);
+}
+
+.word-builder-tile.ghost {
+  border: 2.5px dashed var(--line);
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+
+.word-builder-letter {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 5vw, 38px);
+  line-height: 1;
+}
+
+.word-builder-letter.bounce {
+  animation: word-builder-shake 0.42s;
+  color: var(--bad);
+}
+
+@keyframes word-builder-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes word-builder-hop {
+  40% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes word-builder-shake {
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@media (max-width: 640px) {
+  .word-builder-hud {
+    align-items: flex-start;
+  }
+
+  .word-builder-say {
+    right: -54px;
+  }
+}

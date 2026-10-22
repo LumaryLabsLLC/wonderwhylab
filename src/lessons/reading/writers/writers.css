@@ -1,0 +1,33 @@
+/* Word Masters: small shared animations (prefixed rw-). */
+.rw-shake {
+  animation: rw-shake 0.45s ease;
+}
+
+@keyframes rw-shake {
+  20%,
+  60% {
+    transform: translateX(-7px);
+  }
+  40%,
+  80% {
+    transform: translateX(7px);
+  }
+}
+
+.rw-glow {
+  animation: rw-glow 0.6s ease;
+}
+
+@keyframes rw-glow {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Chips show selection with their own outline; keep the browser focus box for keyboard only. */
+.rw-chip:focus:not(:focus-visible) {
+  outline: none;
+}

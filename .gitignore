@@ -1,0 +1,11 @@
+node_modules
+dist
+*.local
+.DS_Store
+.vercel
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.pem
+*.key

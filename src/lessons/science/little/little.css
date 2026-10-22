@@ -1,0 +1,124 @@
+/* Little Scientists: small shared animations. */
+.sl-bob {
+  animation: sl-bob 2.4s ease-in-out infinite;
+}
+
+@keyframes sl-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.sl-sway {
+  animation: sl-sway 3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@keyframes sl-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-bob,
+  .sl-sway {
+    animation: none;
+  }
+}
+
+.sl-nope {
+  animation: sl-nope 0.5s ease-in-out;
+}
+
+@keyframes sl-nope {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+.sl-steam {
+  animation: sl-rise 1.6s ease-in-out infinite;
+}
+
+@keyframes sl-rise {
+  0% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-14px);
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-steam {
+    animation: none;
+  }
+}
+
+/* Weather Watch: falling rain and snow, blowing wind */
+.sl-fall {
+  animation: sl-fall 0.9s linear infinite;
+}
+
+.sl-fall-slow {
+  animation: sl-fall 2.6s linear infinite;
+}
+
+@keyframes sl-fall {
+  from {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  to {
+    transform: translateY(150px);
+    opacity: 0.2;
+  }
+}
+
+.sl-blow {
+  animation: sl-blow 1.4s ease-in-out infinite;
+}
+
+@keyframes sl-blow {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-fall,
+  .sl-fall-slow,
+  .sl-blow {
+    animation: none;
+  }
+}

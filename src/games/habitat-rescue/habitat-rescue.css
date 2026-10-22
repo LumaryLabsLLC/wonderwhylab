@@ -1,0 +1,474 @@
+.habitat-rescue {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.habitat-rescue-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.habitat-rescue-goal {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.habitat-rescue-say,
+.habitat-rescue-card-say {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ink-2);
+}
+
+.habitat-rescue-say:hover,
+.habitat-rescue-card-say:hover {
+  border-color: var(--line-2);
+}
+
+.habitat-rescue-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.habitat-rescue-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Habitat zones. */
+.habitat-rescue-zones {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: clamp(8px, 1.6vw, 16px);
+}
+
+.habitat-rescue-zone {
+  position: relative;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 22px;
+  border: 2.5px solid var(--ink);
+  box-shadow: 0 5px 0 var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s, outline-color 0.15s;
+  outline: 4px solid transparent;
+  outline-offset: 2px;
+}
+
+.habitat-rescue-zone.ocean {
+  background: linear-gradient(180deg, #d4ecff 0%, #8cc6ff 55%, #4f9df0 100%);
+}
+
+.habitat-rescue-zone.polar {
+  background: linear-gradient(180deg, #ffffff 0%, #e6f3ff 60%, #c3def6 100%);
+}
+
+.habitat-rescue-zone.desert {
+  background: linear-gradient(180deg, #fff3cc 0%, #ffd98a 60%, #f0b75a 100%);
+}
+
+.habitat-rescue-zone.rainforest {
+  background: linear-gradient(180deg, #d5f7dc 0%, #8fdca5 55%, #45ad6c 100%);
+}
+
+.habitat-rescue-zone.grassland {
+  background: linear-gradient(180deg, #fbfbe0 0%, #e6eea0 55%, #bcd36a 100%);
+}
+
+.habitat-rescue-zone.wetland {
+  background: linear-gradient(180deg, #e0f5ee 0%, #a5dcc9 55%, #5fb39b 100%);
+}
+
+.habitat-rescue-zone.ready {
+  outline-color: var(--ocean-soft);
+}
+
+.habitat-rescue-zone.hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 0 var(--ink);
+  outline-color: var(--ocean);
+}
+
+.habitat-rescue-zone.cheer {
+  animation: habitat-rescue-cheer 0.6s ease;
+}
+
+.habitat-rescue-zone.nope {
+  animation: habitat-rescue-nope 0.4s;
+}
+
+.habitat-rescue-zone-icon {
+  font-size: clamp(34px, 5.5vw, 68px);
+  line-height: 1;
+}
+
+.habitat-rescue-zone-name {
+  padding: 2px 12px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(15px, 1.9vw, 20px);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.habitat-rescue-residents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px 4px;
+  max-width: 100%;
+}
+
+.habitat-rescue-resident {
+  font-size: clamp(22px, 3.2vw, 38px);
+  line-height: 1.1;
+  animation: habitat-rescue-move-in 0.4s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.habitat-rescue-tick {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: white;
+  border: 2px solid var(--good);
+  color: var(--good);
+  font-weight: 700;
+  font-size: 13px;
+  animation: habitat-rescue-move-in 0.4s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+/* White versions of animals that Unicode 12 only has in colour. */
+.habitat-rescue-white {
+  filter: grayscale(1) brightness(1.85) contrast(0.85) drop-shadow(0 0 1px rgba(30, 43, 74, 0.6));
+}
+
+.habitat-rescue-feedback {
+  min-height: 1.4em;
+  text-align: center;
+  font-weight: 500;
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--muted);
+}
+
+.habitat-rescue-feedback.good {
+  color: var(--good);
+  font-weight: 600;
+}
+
+.habitat-rescue-feedback.bad {
+  color: var(--ink-2);
+}
+
+/* The dock where animals wait. */
+.habitat-rescue-dock {
+  min-height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 18px);
+  padding: 10px;
+  border-radius: 22px;
+  background: repeating-linear-gradient(90deg, #e9d3b3 0 22px, #dcc29e 22px 24px);
+  border: 2.5px solid #b98f5f;
+}
+
+.habitat-rescue-slot {
+  position: relative;
+}
+
+.habitat-rescue-card {
+  position: relative;
+  min-width: 96px;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 5px 0 var(--ink);
+  color: var(--ink);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.2s cubic-bezier(0.3, 1.3, 0.5, 1), box-shadow 0.15s, opacity 0.15s;
+}
+
+.habitat-rescue-slot:not(.front) .habitat-rescue-card {
+  transform: scale(0.86);
+  opacity: 0.85;
+}
+
+.habitat-rescue-card.feature {
+  width: clamp(150px, 20vw, 210px);
+  min-height: 104px;
+}
+
+.habitat-rescue-card.selected {
+  background: var(--ocean-soft);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 0 var(--ink);
+  opacity: 1;
+}
+
+.habitat-rescue-card.lifted {
+  opacity: 0.35;
+}
+
+.habitat-rescue-card-glyph {
+  font-size: clamp(40px, 6vw, 54px);
+  line-height: 1.1;
+}
+
+.habitat-rescue-card.feature .habitat-rescue-card-glyph {
+  font-size: 32px;
+}
+
+.habitat-rescue-card-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.habitat-rescue-card.words .habitat-rescue-card-label {
+  font-size: clamp(16px, 2vw, 19px);
+}
+
+.habitat-rescue-card-say {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 30px;
+  height: 30px;
+  z-index: 1;
+}
+
+.habitat-rescue-badge {
+  position: absolute;
+  top: -16px;
+  left: -10px;
+  font-size: 30px;
+  line-height: 1;
+  animation: habitat-rescue-move-in 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.habitat-rescue-card.react-shiver {
+  background: #e3f1ff;
+  animation: habitat-rescue-shiver 0.08s linear 8;
+}
+
+.habitat-rescue-card.react-sweat {
+  background: #ffe6dc;
+  animation: habitat-rescue-wobble 0.5s ease 2;
+}
+
+.habitat-rescue-card.react-splash,
+.habitat-rescue-card.react-flop,
+.habitat-rescue-card.react-unsure {
+  animation: habitat-rescue-wobble 0.5s ease 2;
+}
+
+.habitat-rescue-more {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: #7a5a35;
+}
+
+.habitat-rescue-done {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 18px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.habitat-rescue-ghost {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  min-width: 96px;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  color: var(--ink);
+  transform: translate(-50%, -50%) rotate(-3deg);
+  box-shadow: 0 16px 26px -10px rgba(30, 43, 74, 0.5);
+}
+
+.habitat-rescue-ghost.feature {
+  width: 190px;
+}
+
+@keyframes habitat-rescue-move-in {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes habitat-rescue-cheer {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes habitat-rescue-nope {
+  0%,
+  100% {
+    translate: 0;
+  }
+  25%,
+  75% {
+    translate: -6px 0;
+  }
+  50% {
+    translate: 6px 0;
+  }
+}
+
+@keyframes habitat-rescue-shiver {
+  0%,
+  100% {
+    translate: -2px 0;
+  }
+  50% {
+    translate: 2px 0;
+  }
+}
+
+@keyframes habitat-rescue-wobble {
+  25% {
+    rotate: -5deg;
+  }
+  75% {
+    rotate: 5deg;
+  }
+}
+
+@media (max-width: 640px) {
+  .habitat-rescue {
+    gap: 10px;
+  }
+
+  .habitat-rescue-zones.n4,
+  .habitat-rescue-zones.n5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .habitat-rescue-zones.n5 > :last-child {
+    grid-column: span 2;
+  }
+
+  .habitat-rescue-zone {
+    min-height: 92px;
+    padding: 8px 6px;
+    border-radius: 18px;
+    gap: 4px;
+  }
+
+  .habitat-rescue-zones.n3 .habitat-rescue-zone-name {
+    padding: 2px 8px;
+    font-size: 14px;
+  }
+
+  .habitat-rescue-dock {
+    min-height: 116px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .habitat-rescue-card {
+    min-width: 80px;
+    min-height: 84px;
+    padding: 6px 8px;
+  }
+
+  .habitat-rescue-card.feature {
+    width: 132px;
+    min-height: 96px;
+  }
+
+  .habitat-rescue-card-label {
+    font-size: 14px;
+  }
+
+  .habitat-rescue-card.words .habitat-rescue-card-label {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .habitat-rescue-zone,
+  .habitat-rescue-card {
+    transition: none;
+  }
+
+  .habitat-rescue-zone.cheer,
+  .habitat-rescue-zone.nope,
+  .habitat-rescue-resident,
+  .habitat-rescue-tick,
+  .habitat-rescue-badge,
+  .habitat-rescue-card.react-shiver,
+  .habitat-rescue-card.react-sweat,
+  .habitat-rescue-card.react-splash,
+  .habitat-rescue-card.react-flop,
+  .habitat-rescue-card.react-unsure {
+    animation: none;
+  }
+}

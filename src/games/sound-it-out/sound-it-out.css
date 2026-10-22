@@ -1,0 +1,353 @@
+.sound-it-out {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sound-it-out-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sound-it-out-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.sound-it-out-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.sound-it-out-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.sound-it-out-field {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Blending: letter tiles above a slide the frog travels along ── */
+
+.sound-it-out-blend {
+  --tile: min(104px, calc((100vw - 48px) / var(--n) - 10px));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(20px, 5vh, 44px);
+  width: calc(var(--n) * (var(--tile) + 12px));
+  max-width: 100%;
+}
+
+.sound-it-out-tiles {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sound-it-out-tile {
+  width: var(--tile);
+  height: calc(var(--tile) * 1.15);
+  padding: 0;
+  border-radius: 20px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 5px 0 var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(var(--tile) * 0.55);
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  animation: sound-it-out-pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.sound-it-out-tile.wide {
+  font-size: calc(var(--tile) * 0.42);
+}
+
+.sound-it-out-tile:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--ink);
+}
+
+.sound-it-out-tile.lit {
+  background: var(--sun-soft);
+  transform: translateY(-6px);
+}
+
+.sound-it-out-tile.tapped {
+  animation: sound-it-out-boing 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.sound-it-out-track {
+  position: relative;
+  height: 72px;
+  margin: 0 calc(var(--tile) / 2 - 8px);
+}
+
+.sound-it-out-rail,
+.sound-it-out-rail-fill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 99px;
+}
+
+.sound-it-out-rail {
+  right: 0;
+  background: var(--line);
+}
+
+.sound-it-out-rail-fill {
+  background: var(--leaf);
+}
+
+.sound-it-out-arrow {
+  position: absolute;
+  right: -36px;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  fill: none;
+  stroke: var(--line-2);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sound-it-out-frog {
+  position: absolute;
+  top: 50%;
+  width: 68px;
+  height: 68px;
+  margin-top: -34px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 2.5px solid var(--ink);
+  background: var(--leaf-soft);
+  box-shadow: 0 4px 0 var(--ink);
+  display: grid;
+  place-items: center;
+  font-size: 38px;
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  z-index: 2;
+}
+
+.sound-it-out-frog:focus-visible {
+  outline: 3px solid var(--ocean);
+  outline-offset: 3px;
+}
+
+.sound-it-out-frog.hopping {
+  transition: left 0.5s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+
+/* ── Matching: the blended word and its pictures ── */
+
+.sound-it-out-match {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(24px, 6vh, 56px);
+  width: 100%;
+}
+
+.sound-it-out-word-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sound-it-out-word {
+  padding: 10px 30px 14px;
+  border-radius: 20px;
+  border: 2.5px solid var(--ink);
+  background: var(--sun-soft);
+  box-shadow: 0 5px 0 var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(44px, 8vw, 68px);
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  animation: sound-it-out-squeeze 0.6s cubic-bezier(0.3, 1.3, 0.5, 1) both;
+  transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1), opacity 0.3s;
+}
+
+.sound-it-out-word:focus-visible {
+  outline: 3px solid var(--ocean);
+  outline-offset: 3px;
+}
+
+.sound-it-out-word.lifted {
+  z-index: 20;
+  cursor: grabbing;
+  box-shadow: 0 16px 24px -8px rgba(30, 43, 74, 0.45);
+}
+
+.sound-it-out-word.selected {
+  box-shadow: 0 5px 0 var(--ink), 0 0 0 5px rgba(59, 140, 255, 0.35);
+}
+
+.sound-it-out-word.gone {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.sound-it-out-say {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.sound-it-out-say:hover {
+  border-color: var(--line-2);
+  background: var(--surface-2);
+}
+
+.sound-it-out-pictures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 28px);
+}
+
+.sound-it-out-picture {
+  position: relative;
+  width: clamp(96px, 20vw, 170px);
+  aspect-ratio: 1;
+  padding: 0;
+  border-radius: 24px;
+  border: 2.5px dashed var(--line-2);
+  background: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.sound-it-out-picture.ready {
+  border-color: var(--ocean);
+}
+
+.sound-it-out-picture.over {
+  border-style: solid;
+  border-color: var(--ocean);
+  background: var(--ocean-soft);
+  transform: scale(1.05);
+}
+
+.sound-it-out-picture.shake {
+  animation: sound-it-out-shake 0.42s;
+  border-color: var(--bad);
+}
+
+.sound-it-out-picture.right {
+  border: 2.5px solid var(--ink);
+  background: var(--leaf-soft);
+  box-shadow: 0 5px 0 var(--ink);
+  animation: sound-it-out-boing 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.sound-it-out-emoji {
+  font-size: clamp(56px, 11vw, 96px);
+  line-height: 1;
+}
+
+.sound-it-out-label {
+  position: absolute;
+  bottom: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+@keyframes sound-it-out-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes sound-it-out-boing {
+  40% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes sound-it-out-squeeze {
+  from {
+    letter-spacing: 0.9em;
+    opacity: 0.4;
+  }
+}
+
+@keyframes sound-it-out-shake {
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sound-it-out-frog.hopping {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .sound-it-out-hud {
+    align-items: flex-start;
+  }
+
+  .sound-it-out-frog {
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,581 @@
+.molecule-builder {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.molecule-builder-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.molecule-builder-goal {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.molecule-builder-say {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ink-2);
+}
+
+.molecule-builder-say:hover {
+  border-color: var(--line-2);
+}
+
+.molecule-builder-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.molecule-builder-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.molecule-builder-svg {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: visible;
+}
+
+/* Order card + build zone. */
+.molecule-builder-bench {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.38fr) 1fr;
+  gap: clamp(10px, 2vw, 20px);
+}
+
+.molecule-builder-order {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 30px 14px 16px;
+  border-radius: 22px;
+  border: 2.5px solid var(--ink);
+  background: var(--sun-soft);
+  box-shadow: 0 5px 0 var(--ink);
+  min-height: 0;
+}
+
+.molecule-builder-order .molecule-builder-svg {
+  width: min(100%, 240px);
+  height: auto;
+  max-height: 160px;
+}
+
+.molecule-builder-order-label {
+  position: absolute;
+  top: 8px;
+  left: 14px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.molecule-builder-order-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--ink-2);
+  text-align: center;
+}
+
+.molecule-builder-formula {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(44px, 8vw, 76px);
+  line-height: 1;
+}
+
+.molecule-builder-zone {
+  position: relative;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 18px 54px;
+  border-radius: 22px;
+  border: 2.5px dashed var(--line-2);
+  background: white;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.molecule-builder-zone.hover {
+  border-style: solid;
+  border-color: var(--ocean);
+  background: var(--ocean-soft);
+}
+
+.molecule-builder-zone.done {
+  border: 2.5px solid var(--ink);
+  background: var(--leaf-soft);
+}
+
+.molecule-builder-zone > .molecule-builder-svg {
+  max-width: 100%;
+  height: auto;
+  animation: molecule-builder-snap 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.molecule-builder-zone.done > .molecule-builder-svg {
+  animation: molecule-builder-cheer 0.6s ease;
+}
+
+.molecule-builder-zone-hint {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.molecule-builder-counts {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.molecule-builder-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 2px 10px;
+  border-radius: 99px;
+  border: 2px solid var(--line);
+  background: white;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.molecule-builder-count:hover {
+  border-color: var(--coral);
+}
+
+.molecule-builder-feedback {
+  min-height: 1.4em;
+  text-align: center;
+  font-weight: 500;
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--muted);
+}
+
+.molecule-builder-feedback.good {
+  color: var(--good);
+  font-weight: 600;
+}
+
+.molecule-builder-feedback.bad {
+  color: var(--ink-2);
+}
+
+/* Tray of atoms or molecules. */
+.molecule-builder-tray {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.8vw, 16px);
+}
+
+.molecule-builder-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 64px;
+  min-height: 64px;
+  padding: 4px;
+  border-radius: 18px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 4px 0 var(--ink);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.molecule-builder-item:active {
+  cursor: grabbing;
+}
+
+.molecule-builder-item.selected {
+  background: var(--ocean-soft);
+  transform: translateY(-5px);
+  box-shadow: 0 9px 0 var(--ink);
+}
+
+.molecule-builder-item-ball {
+  width: 54px;
+  height: 54px;
+}
+
+.molecule-builder-item.mol {
+  min-width: 84px;
+  padding: 6px 10px;
+}
+
+.molecule-builder-item.mol .molecule-builder-svg {
+  height: 34px;
+  width: auto;
+}
+
+.molecule-builder-item-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.molecule-builder-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: clamp(4px, 2vw, 18px);
+}
+
+.molecule-builder-ghost {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1.08);
+  filter: drop-shadow(0 10px 12px rgba(30, 43, 74, 0.35));
+}
+
+.molecule-builder-ghost .molecule-builder-svg {
+  width: 90px;
+}
+
+/* Equation board (ages 10–12). */
+.molecule-builder-equation {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+
+.molecule-builder-sides {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.molecule-builder-side {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.molecule-builder-term {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.molecule-builder-op,
+.molecule-builder-arrow {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 32px);
+  color: var(--ink-2);
+}
+
+.molecule-builder-arrow {
+  padding: 0 4px;
+}
+
+.molecule-builder-slot {
+  position: relative;
+  min-width: clamp(96px, 13vw, 150px);
+  min-height: clamp(100px, 16vh, 170px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 10px 10px 12px;
+  border-radius: 18px;
+  border: 2.5px dashed var(--line-2);
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.molecule-builder-slot.ready {
+  border-color: var(--ocean);
+}
+
+.molecule-builder-slot.hover {
+  border-style: solid;
+  border-color: var(--ocean);
+  background: var(--ocean-soft);
+}
+
+.molecule-builder-slot.done {
+  border: 2.5px solid var(--ink);
+  background: var(--leaf-soft);
+  cursor: default;
+}
+
+.molecule-builder-slot.shake {
+  animation: molecule-builder-shake 0.4s;
+}
+
+.molecule-builder-coef.empty {
+  color: var(--line-2);
+}
+
+.molecule-builder-slot-formula {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 34px);
+  line-height: 1;
+}
+
+.molecule-builder-slot-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.molecule-builder-coef {
+  min-width: 0.7em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 34px);
+  line-height: 1;
+  color: var(--ocean);
+  text-align: right;
+}
+
+.molecule-builder-stack {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 150px;
+}
+
+.molecule-builder-stack .molecule-builder-svg {
+  height: 30px;
+  width: auto;
+  animation: molecule-builder-snap 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.molecule-builder-minus {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: white;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.molecule-builder-minus::before {
+  /* Bigger touch target than the visible button. */
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+
+.molecule-builder-tally {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.molecule-builder-tally-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 2px solid var(--line);
+  background: white;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.molecule-builder-tally-row.even {
+  border-color: var(--good);
+  background: var(--leaf-soft);
+  color: var(--good);
+}
+
+@keyframes molecule-builder-snap {
+  from {
+    transform: scale(0.85);
+  }
+}
+
+@keyframes molecule-builder-cheer {
+  50% {
+    transform: translateY(-8px) rotate(-3deg);
+  }
+}
+
+@keyframes molecule-builder-shake {
+  0%,
+  100% {
+    translate: 0;
+  }
+  25%,
+  75% {
+    translate: -8px 0;
+  }
+  50% {
+    translate: 8px 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .molecule-builder {
+    gap: 10px;
+  }
+
+  .molecule-builder-bench {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .molecule-builder-order {
+    flex-direction: row;
+    padding: 26px 12px 10px;
+    min-height: 96px;
+  }
+
+  .molecule-builder-order .molecule-builder-svg {
+    width: auto;
+    max-width: 60%;
+    height: 72px;
+  }
+
+  .molecule-builder-formula {
+    font-size: 48px;
+  }
+
+  .molecule-builder-zone {
+    min-height: 160px;
+  }
+
+  .molecule-builder-item {
+    min-width: 60px;
+    min-height: 60px;
+  }
+
+  .molecule-builder-item-ball {
+    width: 48px;
+    height: 48px;
+  }
+
+  .molecule-builder-item.mol {
+    min-width: 72px;
+    padding: 6px;
+  }
+
+  .molecule-builder-actions {
+    flex-basis: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .molecule-builder-actions .btn {
+    flex: 1;
+    max-width: 180px;
+  }
+
+  .molecule-builder-sides {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .molecule-builder-arrow {
+    transform: rotate(90deg);
+    line-height: 1;
+  }
+
+  .molecule-builder-slot {
+    min-width: 92px;
+    min-height: 96px;
+  }
+
+  .molecule-builder-tally-row {
+    font-size: 13px;
+    padding: 3px 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .molecule-builder-item,
+  .molecule-builder-zone,
+  .molecule-builder-slot,
+  .molecule-builder-tally-row {
+    transition: none;
+  }
+
+  .molecule-builder-zone > .molecule-builder-svg,
+  .molecule-builder-zone.done > .molecule-builder-svg,
+  .molecule-builder-stack .molecule-builder-svg,
+  .molecule-builder-slot.shake {
+    animation: none;
+  }
+}

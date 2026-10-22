@@ -1,0 +1,504 @@
+.story-detective {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.story-detective-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.story-detective-goal {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px);
+  line-height: 1.2;
+}
+
+.story-detective-stats {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.story-detective-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: white;
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.story-detective-say {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--line-2);
+  background: white;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+
+.story-detective-say.corner {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.story-detective-say.caption {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 30px;
+  height: 30px;
+}
+
+/* ───────── Text rounds ───────── */
+
+.story-detective-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(820px, 100%);
+  margin: 0 auto;
+}
+
+.story-detective-question {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: var(--grape-soft);
+  border: 2.5px solid var(--ink);
+}
+
+.story-detective-q {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(19px, 2.8vw, 26px);
+  line-height: 1.25;
+}
+
+.story-detective-passage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 54px 16px 16px;
+  border-radius: 20px;
+  background: white;
+  border: 2.5px solid var(--line);
+}
+
+.story-detective-sentence {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 2px dashed transparent;
+  background: transparent;
+  text-align: left;
+  font-size: clamp(17px, 2.4vw, 21px);
+  line-height: 1.45;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.story-detective-sentence.ready {
+  border-color: var(--line-2);
+}
+
+.story-detective-sentence.hover {
+  border-style: solid;
+  border-color: var(--grape);
+  background: var(--grape-soft);
+}
+
+.story-detective-sentence.clue {
+  border: 2px solid var(--ink);
+  background: var(--sun-soft);
+  cursor: default;
+}
+
+.story-detective-sentence.wrong {
+  animation: story-detective-shake 0.45s;
+  background: var(--coral-soft);
+}
+
+.story-detective-sentence.show-me {
+  border-style: solid;
+  border-color: var(--sun);
+  background: var(--sun-soft);
+  animation: story-detective-glow 1.4s ease-in-out infinite;
+}
+
+.story-detective-mark {
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+
+.story-detective-tray {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.story-detective-tray-label {
+  font-size: 15px;
+  color: var(--ink-2);
+  max-width: 320px;
+}
+
+.story-detective-glass {
+  position: relative;
+  z-index: 5;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--sun);
+  box-shadow: 0 5px 0 var(--ink);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.25s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+
+.story-detective-glass.selected {
+  outline: 4px solid var(--grape);
+  outline-offset: 3px;
+}
+
+.story-detective-glass.dragging {
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 0 14px 24px -8px rgba(30, 43, 74, 0.45);
+}
+
+.story-detective-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.story-detective-choice {
+  min-height: 60px;
+  padding: 8px 12px;
+  border-radius: 16px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 4px 0 var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(16px, 2.2vw, 20px);
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.story-detective-choice:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--ink);
+}
+
+.story-detective-choice.right {
+  background: var(--leaf);
+}
+
+.story-detective-choice.wrong {
+  background: #f3f3f3;
+  border-color: var(--bad);
+  box-shadow: 0 4px 0 var(--bad);
+  opacity: 0.7;
+}
+
+.story-detective-choice.show-me {
+  background: var(--sun-soft);
+  outline: 4px solid var(--sun);
+  outline-offset: 3px;
+}
+
+.story-detective-choice:disabled {
+  cursor: default;
+}
+
+/* ───────── Picture rounds (ages 4–5) ───────── */
+
+.story-detective-pictures {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(860px, 100%);
+  margin: 0 auto;
+}
+
+.story-detective-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(18px, 2.8vw, 26px);
+}
+
+.story-detective-slots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 18px);
+}
+
+.story-detective-slot {
+  position: relative;
+  aspect-ratio: 1 / 0.9;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  border: 2.5px dashed var(--line-2);
+  background: rgba(255, 255, 255, 0.7);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.story-detective-slot.hover {
+  border-style: solid;
+  border-color: var(--grape);
+  background: var(--grape-soft);
+  transform: scale(1.03);
+}
+
+.story-detective-slot.filled {
+  border: 2.5px solid var(--ink);
+  background: white;
+}
+
+.story-detective-slot.focus {
+  background: var(--sun-soft);
+}
+
+.story-detective-num {
+  position: absolute;
+  top: -12px;
+  left: -10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.story-detective-scene {
+  padding-top: 18px;
+  font-size: clamp(22px, 5.8vw, 58px);
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* The question picture, shown big so every part is easy to tap. */
+.story-detective-zoom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 2vw, 18px);
+  width: min(560px, 100%);
+  margin: 0 auto;
+  padding: 14px;
+  border-radius: 24px;
+  border: 2.5px solid var(--ink);
+  background: white;
+}
+
+.story-detective-item {
+  min-width: 76px;
+  min-height: 76px;
+  padding: 4px;
+  border-radius: 18px;
+  border: 2.5px solid var(--line);
+  background: var(--surface-2);
+  font-size: clamp(44px, 11vw, 72px);
+  line-height: 1.1;
+  cursor: pointer;
+}
+
+.story-detective-item:hover {
+  border-color: var(--line-2);
+}
+
+.story-detective-item.wrong {
+  opacity: 0.4;
+}
+
+.story-detective-item.right {
+  border-color: var(--ink);
+  background: var(--leaf-soft);
+  animation: story-detective-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.story-detective-item.show-me {
+  border-color: var(--sun);
+  background: var(--sun-soft);
+  animation: story-detective-glow 1.4s ease-in-out infinite;
+}
+
+.story-detective-item.shake,
+.story-detective-card.shake {
+  animation: story-detective-shake 0.45s;
+}
+
+.story-detective-pile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(10px, 2.4vw, 22px);
+  padding: 6px;
+}
+
+.story-detective-card-wrap {
+  position: relative;
+}
+
+.story-detective-card {
+  width: clamp(100px, 24vw, 200px);
+  aspect-ratio: 1 / 0.9;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  border: 2.5px solid var(--ink);
+  background: white;
+  box-shadow: 0 5px 0 var(--ink);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.25s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+
+.story-detective-card.dragging {
+  position: relative;
+  z-index: 5;
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 0 14px 24px -8px rgba(30, 43, 74, 0.45);
+}
+
+.story-detective-card.show-me {
+  background: var(--sun-soft);
+  animation: story-detective-glow 1.4s ease-in-out infinite;
+}
+
+/* ───────── Shared ───────── */
+
+.story-detective-feedback {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 8px;
+  text-align: center;
+  font-size: clamp(15px, 2.1vw, 18px);
+  color: var(--ink-2);
+}
+
+.story-detective-feedback svg {
+  flex: none;
+}
+
+.story-detective-next {
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes story-detective-shake {
+  0%,
+  100% {
+    translate: 0;
+  }
+  25%,
+  75% {
+    translate: -8px 0;
+  }
+  50% {
+    translate: 8px 0;
+  }
+}
+
+@keyframes story-detective-glow {
+  50% {
+    translate: 0 -4px;
+  }
+}
+
+@keyframes story-detective-pop {
+  from {
+    transform: scale(0.6);
+  }
+}
+
+@media (max-width: 640px) {
+  .story-detective-passage {
+    padding: 12px 46px 12px 8px;
+  }
+
+  .story-detective-choices {
+    grid-template-columns: 1fr;
+  }
+
+  .story-detective-glass {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-detective-glass,
+  .story-detective-card,
+  .story-detective-slot,
+  .story-detective-sentence {
+    transition: none;
+  }
+
+  .story-detective-sentence.wrong,
+  .story-detective-sentence.show-me,
+  .story-detective-item.right,
+  .story-detective-item.show-me,
+  .story-detective-item.shake,
+  .story-detective-card.shake,
+  .story-detective-card.show-me {
+    animation: none;
+  }
+}

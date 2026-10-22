@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: 'Fredoka'; font-weight: 600; src: url('../../node_modules/@fontsource/fredoka/files/fredoka-latin-600-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Fredoka'; font-weight: 700; src: url('../../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Lexend'; font-weight: 100 900; src: url('../../node_modules/@fontsource-variable/lexend/files/lexend-latin-wght-normal.woff2') format('woff2'); }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden; position: relative;
+    font-family: 'Lexend', sans-serif; color: #1e2b4a;
+    background:
+      radial-gradient(circle at 8% 10%, #fff1b0 0, transparent 38%),
+      radial-gradient(circle at 92% 92%, #c9f2da 0, transparent 40%),
+      radial-gradient(circle at 70% 0%, #ffd9e6 0, transparent 35%),
+      #eef5ff;
+  }
+  /* soft graph-paper texture */
+  body::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(59,140,255,.07) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(59,140,255,.07) 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+  }
+
+  .doodle { position: absolute; }
+
+  .left { position: absolute; left: 64px; top: 54px; width: 540px; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand svg { width: 104px; height: 104px; filter: drop-shadow(0 5px 0 rgba(30,43,74,.18)); }
+  .title { font-family: 'Fredoka'; font-weight: 700; font-size: 74px; line-height: .95; letter-spacing: .5px; }
+  .title .w span { display: inline-block; -webkit-text-stroke: 2.5px #1e2b4a; paint-order: stroke fill; text-shadow: 0 5px 0 #1e2b4a; }
+  .title .w span:nth-child(2n) { transform: translateY(-3px) rotate(5deg); }
+  .title .w span:nth-child(2n+1) { transform: rotate(-5deg); }
+  .title .rest { display: block; margin-top: 6px; }
+
+  .pitch { margin: 30px 0 0; font-family: 'Fredoka'; font-weight: 600; font-size: 39px; line-height: 1.12; }
+  .pitch em { font-style: normal; background: linear-gradient(transparent 60%, #ffd23f 60%); padding: 0 4px; }
+  .sub { margin: 12px 0 0; font-size: 22px; color: #3b4766; font-weight: 500; white-space: nowrap; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 12px 10px; margin-top: 22px; max-width: 540px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px 8px 12px; border-radius: 99px; border: 3px solid #1e2b4a; box-shadow: 0 4px 0 #1e2b4a; font-family: 'Fredoka'; font-weight: 700; font-size: 21px; white-space: nowrap; }
+  .chip .e { font-size: 21px; }
+
+  .url { position: absolute; left: 64px; bottom: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 22px; border-radius: 99px; background: #1e2b4a; color: white; font-family: 'Fredoka'; font-weight: 600; font-size: 26px; letter-spacing: .3px; }
+  .url i { width: 12px; height: 12px; border-radius: 50%; background: #34c47c; display: inline-block; }
+
+  .shot { position: absolute; border: 4px solid #1e2b4a; border-radius: 22px; overflow: hidden; background: white; box-shadow: 0 10px 0 #1e2b4a, 0 30px 50px -20px rgba(30,43,74,.5); }
+  .shot img { display: block; width: 100%; }
+  .shot.a { width: 520px; right: -28px; top: 128px; transform: rotate(4deg); }
+  .shot.b { width: 290px; right: 318px; top: 378px; transform: rotate(-6deg); z-index: 2; }
+
+  .burst { position: absolute; right: 30px; top: 10px; width: 200px; height: 200px; z-index: 3; transform: rotate(10deg); }
+  .burst span { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: 'Fredoka'; font-weight: 700; font-size: 36px; line-height: 1; color: #1e2b4a; }
+  .burst small { display: block; font-size: 18px; font-weight: 600; margin-top: 3px; }
+</style>
+</head>
+<body>
+  <!-- doodles -->
+  <svg class="doodle" style="left:620px;top:60px" width="56" height="56" viewBox="-30 -30 60 60"><polygon points="0,-26 7,-8 26,-8 11,4 17,23 0,12 -17,23 -11,4 -26,-8 -7,-8" fill="#ffd23f" stroke="#1e2b4a" stroke-width="3" stroke-linejoin="round"/></svg>
+  <svg class="doodle" style="left:500px;top:22px" width="40" height="40" viewBox="0 0 46 46"><path d="M8 23H38M23 8V38" stroke="#ff5d8f" stroke-width="9" stroke-linecap="round"/></svg>
+  <svg class="doodle" style="left:540px;top:520px" width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="#3b8cff" stroke="#1e2b4a" stroke-width="3"/></svg>
+  <svg class="doodle" style="left:470px;top:595px" width="70" height="30" viewBox="0 0 70 30"><path d="M4 15 q8 -12 16 0 t16 0 t16 0 t16 0" fill="none" stroke="#34c47c" stroke-width="7" stroke-linecap="round"/></svg>
+  <svg class="doodle" style="left:1110px;top:560px" width="64" height="64" viewBox="-32 -32 64 64"><g fill="none" stroke="#8b5cf6" stroke-width="3.5"><ellipse rx="28" ry="10"/><ellipse rx="28" ry="10" transform="rotate(60)"/><ellipse rx="28" ry="10" transform="rotate(-60)"/></g><circle r="6" fill="#ff6b5b" stroke="#1e2b4a" stroke-width="2.5"/></svg>
+
+  <div class="left">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden>
+        <circle cx="33" cy="35" r="28" fill="#1e2b4a"/>
+        <path d="M32 32 V4 A28 28 0 0 0 4 32 Z" fill="#ff6b5b"/><path d="M32 32 V4 A28 28 0 0 1 60 32 Z" fill="#3b8cff"/>
+        <path d="M32 32 H4 A28 28 0 0 0 32 60 Z" fill="#ffd23f"/><path d="M32 32 H60 A28 28 0 0 1 32 60 Z" fill="#34c47c"/>
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#1e2b4a" stroke-width="3.5"/>
+        <circle cx="32" cy="32" r="17" fill="white" stroke="#1e2b4a" stroke-width="3"/>
+        <path d="M26 27.5c0-3.6 2.8-6 6.3-6s6.2 2.3 6.2 5.6c0 2.6-1.6 3.9-3.4 5-1.6 1-2.6 1.8-2.6 3.6v.8" fill="none" stroke="#1e2b4a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="32.5" cy="42.2" r="2.4" fill="#1e2b4a"/>
+      </svg>
+      <div class="title">
+        <span class="w"><span style="color:#ff6b5b">W</span><span style="color:#ff9f43">o</span><span style="color:#e0b11a">n</span><span style="color:#34c47c">d</span><span style="color:#3b8cff">e</span><span style="color:#8b5cf6">r</span></span>
+        <span class="rest">Why Lab</span>
+      </div>
+    </div>
+
+    <p class="pitch">Hands-on <em>math, reading</em><br />&amp; <em>science</em> for curious kids</p>
+    <p class="sub">Playgrounds, games &amp; gentle practice · ages 4–12</p>
+
+    <div class="chips">
+      <span class="chip" style="background:#dde9ff"><span class="e">🔢</span> Math</span>
+      <span class="chip" style="background:#ffe3df"><span class="e">📖</span> Reading</span>
+      <span class="chip" style="background:#d5f5ef"><span class="e">🔬</span> Science</span>
+      <span class="chip" style="background:#efe4ff"><span class="e">🤖</span> Coding</span>
+      <span class="chip" style="background:#fff1c9"><span class="e">🗺️</span> World</span>
+      <span class="chip" style="background:#ffe4f0"><span class="e">💛</span> Life skills</span>
+    </div>
+  </div>
+
+  <div class="shot a"><img src="og-lesson.png" /></div>
+  <div class="shot b"><img src="og-science.png" /></div>
+
+  <svg class="burst" viewBox="-75 -75 150 150" aria-hidden>
+    <polygon fill="#ffd23f" stroke="#1e2b4a" stroke-width="4" stroke-linejoin="round"
+      points="0,-70 14,-48 39,-58 37,-31 64,-26 47,-5 66,15 40,24 45,51 19,44 8,70 -9,48 -33,60 -33,33 -60,26 -44,5 -66,-13 -40,-23 -47,-49 -20,-42" />
+  </svg>
+  <div class="burst"><span>190+<small>lessons</small><small>26 games</small><small>24 stories</small></span></div>
+
+  <div class="url"><i></i> wonderwhylab.com</div>
+</body>
+</html>
