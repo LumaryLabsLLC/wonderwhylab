@@ -5,39 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Page not found · Wonder Why Lab</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#78bdff">
+  <meta name="theme-color" content="#7cc8ff">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
 </head>
 <body>
-  <div class="hero lost">
-  <div class="cloud cloud-1" aria-hidden="true"></div>
-  <div class="cloud cloud-2" aria-hidden="true"></div>
+  <div class="sky lost">
+    <div class="cloud c1" aria-hidden="true"></div>
+    <div class="cloud c2" aria-hidden="true"></div>
+    <div class="cloud c3" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="/">
-        <img src="/images/icon-128.png" alt="" width="44" height="44">
-        Wonder Why Lab
-      </a>
-    </div>
-  </header>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand glass" href="/">
+          <img src="/images/icon-128.png" alt="" width="40" height="40">
+          <span class="brand-name">Wonder Why Lab</span>
+        </a>
+      </div>
+    </header>
 
-  <main id="main">
-    <div class="wrap">
-      <img class="app-icon" src="/images/icon-256.png" alt="Pip the owl" width="116" height="116">
-      <h1>Hoo! This page flew away.</h1>
-      <p>We couldn’t find what you were looking for.</p>
-      <a class="button" href="/">Back to the home page</a>
-    </div>
-  </main>
+    <main id="main">
+      <div class="wrap">
+        <div class="pip-says">
+          <button class="pip-btn" type="button" data-pip="cheer" aria-label="Pip the owl. Tap Pip to cheer up.">
+            <span class="pip-float"><svg class="pip thinking" viewBox="-14 -4 128 112" aria-hidden="true" focusable="false"><defs><radialGradient id="pe-body" gradientUnits="userSpaceOnUse" cx="39.7" cy="34.5" r="62"><stop offset=".08" stop-color="#7ccbff"/><stop offset=".54" stop-color="#3b8cff"/><stop offset="1" stop-color="#2a6fd6"/></radialGradient><linearGradient id="pe-belly" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6e0"/><stop offset="1" stop-color="#ffe6b8"/></linearGradient><filter id="pe-shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#1e2b4a" flood-opacity=".25"/></filter></defs><g fill="#ff9f1c"><rect x="22" y="95" width="20" height="9" rx="4.5"/><rect x="58" y="95" width="20" height="9" rx="4.5"/></g><g fill="#2f7bea"><path d="M11 24.5Q13.2 12.5 22 .5Q30.8 12.5 33 24.5Z" transform="rotate(-16 22 12.5)"/><path d="M67 24.5Q69.2 12.5 78 .5Q86.8 12.5 89 24.5Z" transform="rotate(16 78 12.5)"/></g><ellipse class="wing wing-l" cx="3" cy="60.5" rx="10" ry="18" fill="#2a6fd6"/><ellipse class="wing wing-r" cx="97" cy="60.5" rx="10" ry="18" fill="#2a6fd6"/><ellipse cx="50" cy="52.5" rx="43" ry="45" fill="url(#pe-body)" filter="url(#pe-shadow)"/><ellipse cx="50" cy="70.5" rx="26" ry="23" fill="url(#pe-belly)"/><g class="eye"><circle cx="34" cy="40.5" r="13.5" fill="#fff" stroke="#1e2b4a" stroke-opacity=".12"/><g class="pupil"><circle cx="34" cy="40.5" r="7" fill="#1e2b4a"/><circle cx="31.5" cy="38" r="2.5" fill="#fff"/></g><path class="happy" d="M27.5 43.5Q34 31.5 40.5 43.5" fill="none" stroke="#1e2b4a" stroke-width="3.5" stroke-linecap="round"/></g><g class="eye"><circle cx="66" cy="40.5" r="13.5" fill="#fff" stroke="#1e2b4a" stroke-opacity=".12"/><g class="pupil"><circle cx="66" cy="40.5" r="7" fill="#1e2b4a"/><circle cx="63.5" cy="38" r="2.5" fill="#fff"/></g><path class="happy" d="M59.5 43.5Q66 31.5 72.5 43.5" fill="none" stroke="#1e2b4a" stroke-width="3.5" stroke-linecap="round"/></g><g fill="#ff8fb1" fill-opacity=".7"><circle cx="24" cy="55.5" r="5"/><circle cx="76" cy="55.5" r="5"/></g><path d="M42.5 51H57.5Q55.25 58.2 50 60Q44.75 58.2 42.5 51Z" fill="#ffb020"/></svg></span>
+          </button>
+          <p class="bubble">Hoo! Where did that page go?</p>
+        </div>
+        <h1>This page flew away</h1>
+        <p>We couldn’t find what you were looking for.</p>
+        <a class="chunky green" href="/">Back to the home page</a>
+      </div>
+    </main>
 
-  <svg class="hills" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 96 C 220 40 470 34 720 78 S 1180 132 1440 64 L1440 170 L0 170 Z" fill="#bfe8a6"/>
-    <path d="M0 132 C 280 92 590 150 900 122 S 1290 98 1440 124 L1440 170 L0 170 Z" fill="#fff8ec"/>
-  </svg>
+    <svg class="hills" viewBox="0 0 1440 280" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 150C180 70 380 60 560 120S900 190 1080 120S1340 60 1440 100V280H0Z" fill="#b5ea9f"/>
+      <path d="M0 200C240 130 520 150 760 190S1200 150 1440 170V280H0Z" fill="#9be38a"/>
+      <path d="M0 240C300 205 640 250 960 232S1320 215 1440 230V280H0Z" fill="#8fdc80"/>
+    </svg>
   </div>
 </body>
 </html>
